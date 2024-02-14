@@ -24,13 +24,11 @@ function SuperDiamondStoreConst() {
                 const request = indexedDB.open(this.dbName, this.dbVersion);
 
                 request.onerror = () => {
-                    console.error('Failed to open database.');
-                    reject('Failed to open database.');
+                    reject(new Error('Failed to open database.'));
                 };
 
                 request.onsuccess = () => {
                     this.db = request.result;
-                    console.log('Database opened successfully.');
                     this.isInitialized = true;
                     resolve();
                 };
@@ -47,7 +45,6 @@ function SuperDiamondStoreConst() {
         const transaction = this.db.transaction([this.storeName], 'readwrite');
         const store = transaction.objectStore(this.storeName);
         await store.put(value, key);
-        console.log('Item set successfully.');
     },
     getItem: async function (key) {
         const transaction = this.db.transaction([this.storeName], 'readonly');
@@ -57,17 +54,14 @@ function SuperDiamondStoreConst() {
         return new Promise((resolve, reject) => {
             request.onsuccess = () => {
                 if (request.result) {
-                    console.log('Item retrieved successfully.');
                     resolve(request.result);
                 } else {
-                    console.error('Item not found.');
-                    reject('Item not found.');
+                    reject(new Error('Item not found.'));
                 }
             };
 
             request.onerror = () => {
-                console.error('Failed to retrieve item.');
-                reject('Failed to retrieve item.');
+                reject(new Error('Failed to retrieve item.'));
             };
         });
     },
@@ -75,14 +69,12 @@ function SuperDiamondStoreConst() {
         const transaction = this.db.transaction([this.storeName], 'readwrite');
         const store = transaction.objectStore(this.storeName);
         await store.delete(key);
-        console.log('Item removed successfully.');
     },
 
     clear: async function () {
         const transaction = this.db.transaction([this.storeName], 'readwrite');
         const store = transaction.objectStore(this.storeName);
         await store.clear();
-        console.log('Store cleared successfully.');
     }
   }
   this.async = bindFunctionsToObject(this.async, this)
