@@ -70,6 +70,7 @@ function SuperDiamondStoreConst() {
         console.log('Store cleared successfully.');
     }
   }
+  this.async.bind(this);
     this.sync = {
      reload: function () {
       var val = null 
@@ -108,6 +109,7 @@ function SuperDiamondStoreConst() {
       return val;  
     }
   }
+  this.sync.bind(this);
 }
 
 const SuperDiamondStore = new SuperDiamondStoreConst();
