@@ -1,3 +1,18 @@
+function bindFunctionsToObject(obj, context) {
+    // Iterate over all properties of the object
+    for (const key in obj) {
+        // Check if the property is a function
+        if (typeof obj[key] === 'function') {
+            // Bind the function to the specified context
+            obj[key] = obj[key].bind(context);
+        } else if (typeof obj[key] === 'object') {
+            // If the property is an object, recursively bind functions in nested objects
+            bindFunctionsToObject(obj[key], context);
+        }
+    }
+    return obj;
+}
+
 function SuperDiamondStoreConst() {
     this.dbName = 'SUPERDIAMONDSTORE_Storage';
     this.name = 'SuperDiamondStore';
@@ -70,7 +85,7 @@ function SuperDiamondStoreConst() {
         console.log('Store cleared successfully.');
     }
   }
-  this.async.bind(this);
+  this.async = bindFunctionsToObject(this.async, this)
     this.sync = {
      reload: function () {
       var val = null 
@@ -109,7 +124,7 @@ function SuperDiamondStoreConst() {
       return val;  
     }
   }
-  this.sync.bind(this);
+  this.sync = bindFunctionsToObject(this.sync, this)
 }
 
 const SuperDiamondStore = new SuperDiamondStoreConst();
