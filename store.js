@@ -15,7 +15,7 @@ function bindFunctionsToObject(obj, context) {
 
 function SuperDiamondStoreConst() {
     this.dbName = 'SUPERDIAMONDSTORE_Storage';
-    this.name = 'SuperDiamondStore';
+    this.storeName = 'SuperDiamondStore';
     this.version = 1;
     this.db = null;
     this.async = {
@@ -37,8 +37,8 @@ function SuperDiamondStoreConst() {
 
                 request.onupgradeneeded = event => {
                     const db = event.target.result;
-                    if (!db.objectStoreNames.contains(this.name)) {
-                        db.createObjectStore(this.name);
+                    if (!db.objectStoreNames.contains(this.storeName)) {
+                        db.createObjectStore(this.storeName);
                     }
                 };
             });
