@@ -37,8 +37,8 @@ function SuperDiamondStoreConst() {
 
                 request.onupgradeneeded = event => {
                     const db = event.target.result;
-                    if (!db.objectStoreNames.contains(this.storeName)) {
-                        db.createObjectStore(this.storeName);
+                    if (!db.objectStoreNames.contains(this.name)) {
+                        db.createObjectStore(this.name);
                     }
                 };
             });
