@@ -30,8 +30,8 @@ function SuperDiamondStoreConst() {
                 request.onsuccess = () => {
                     this.db = request.result;
                     this.isInitialized = true;
-                    if (!db.objectStoreNames.contains(this.storeName)) {
-                        db.createObjectStore(this.storeName);
+                    if (!this.db.objectStoreNames.contains(this.storeName)) {
+                        this.db.createObjectStore(this.storeName);
                     }
                     resolve();
                 };
